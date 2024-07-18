@@ -1,0 +1,7 @@
+elasticsearch
+python-telegram-bot
+dotenv
+json
+asyncio
+datetime
+os
