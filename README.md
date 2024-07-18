@@ -1,7 +1,7 @@
 # Elastic-Alerts
 There are more and better projects to send detection alerts to Telegram. But sometimes one likes just to code.
 
-This script should be ran in cron. For example evry 5 minutes:
+This script should be ran in cron. For example every 5 minutes:
 ```
 */5 * * * * /location/elastic_alert.py
 ```
