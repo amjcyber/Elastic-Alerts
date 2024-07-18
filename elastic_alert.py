@@ -25,7 +25,9 @@ def create_elasticsearch_client(host, password, fingerprint):
     return Elasticsearch(
         host,
         ssl_assert_fingerprint=fingerprint,
-        basic_auth=("elastic", password)
+        basic_auth=("elastic", password),
+        verify_certs=False,  # Disable SSL certificate verification
+        ssl_show_warn=False
     )
 
 def get_alerts(client, index_pattern, query):
