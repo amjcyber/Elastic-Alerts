@@ -14,11 +14,10 @@ pip3 install -r requirements.txt
 ### Environment variables
 Create a `.env` file:
 ```
-ELASTIC_PASSWORD = ""
-CERT_FINGERPRINT = ""
 ELASTIC_HOST = ""
 token = ""
 chat_id = ""
+api_key = ""
 ```
 ### Create your Telegram bot
 Check: [From BotFather to 'Hello World'](https://core.telegram.org/bots/tutorial)

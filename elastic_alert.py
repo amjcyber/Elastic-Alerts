@@ -9,11 +9,10 @@ from dotenv import load_dotenv
 
 load_dotenv()
 try:
-    ELASTIC_PASSWORD = os.environ['ELASTIC_PASSWORD']
-    CERT_FINGERPRINT = os.environ['CERT_FINGERPRINT']
     ELASTIC_HOST = os.environ['ELASTIC_HOST']
     token = os.environ['token']
-    chat_id = os.environ['chat_id']    
+    chat_id = os.environ['chat_id']
+    api_key = os.environ['api_key']
 except KeyError as e:
     raise KeyError(f"Environment variable {e} not found. Make sure the environment variables are defined.")
 
@@ -21,12 +20,11 @@ async def send_telegram_message(token, chat_id, message):
     bot = Bot(token=token)
     await bot.send_message(chat_id=chat_id, text=message, parse_mode='Markdown')
 
-def create_elasticsearch_client(host, password, fingerprint):
+def create_elasticsearch_client(host, api_key):
     return Elasticsearch(
-        host,
-        ssl_assert_fingerprint=fingerprint,
-        basic_auth=("elastic", password),
-        verify_certs=False,  # Disable SSL certificate verification
+        ELASTIC_HOST,
+        api_key=api_key,
+        verify_certs=False,
         ssl_show_warn=False
     )
 
@@ -63,7 +61,7 @@ def write_processed_ids(file_path, ids):
 async def main():
     now = datetime.utcnow()
     one_day_ago = now - timedelta(days=2)
-    client = create_elasticsearch_client(ELASTIC_HOST, ELASTIC_PASSWORD, CERT_FINGERPRINT)
+    client = create_elasticsearch_client(ELASTIC_HOST, api_key)
 
     # Elastic query
     index_pattern = ".siem-signals-*"
