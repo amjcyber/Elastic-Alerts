@@ -13,12 +13,18 @@ try:
     token = os.environ['token']
     chat_id = os.environ['chat_id']
     api_key = os.environ['api_key']
+    message_thread_id = os.environ['message_thread_id']
 except KeyError as e:
     raise KeyError(f"Environment variable {e} not found. Make sure the environment variables are defined.")
 
-async def send_telegram_message(token, chat_id, message):
+async def send_telegram_message(token, chat_id, message, message_thread_id=None):
     bot = Bot(token=token)
-    await bot.send_message(chat_id=chat_id, text=message, parse_mode='Markdown')
+    await bot.send_message(
+        chat_id=chat_id,
+        text=message,
+        parse_mode='Markdown',
+        message_thread_id=message_thread_id
+    )
 
 def create_elasticsearch_client(host, api_key):
     return Elasticsearch(
@@ -89,7 +95,7 @@ async def main():
         if alert_id not in processed_ids:
             alert_json = json.dumps(alert, indent=2)
             alert_message = f"🔴 Elastic Detection:\n```\n{alert_json}\n```"
-            await send_telegram_message(token, chat_id, alert_message)
+            await send_telegram_message(token, chat_id, alert_message,message_thread_id)
             new_processed_ids.add(alert_id)
 
     # Add IDs

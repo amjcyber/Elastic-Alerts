@@ -18,9 +18,13 @@ ELASTIC_HOST = ""
 token = ""
 chat_id = ""
 api_key = ""
+message_thread_id = ""
 ```
 ### Create your Telegram bot
 Check: [From BotFather to 'Hello World'](https://core.telegram.org/bots/tutorial)
+
+### Telegram Group
+I configured it to send messages to a Thread in a Telegram Group
 
 ## How it works
 1. Connects to your Elastic
